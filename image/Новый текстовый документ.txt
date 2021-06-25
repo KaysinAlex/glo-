@@ -1,0 +1,50 @@
+заходим в папку - View - terminal:
+потом выполняем шаги:
+
+1. npm init //  в имени папки если есть пробелы инициализация не пройдет ,
+ 1,1 поменять можно будет в package name после скобок установить имя,
+ 1,2потом в entry point (наш.js) создадим новый файл js чтоб написать скрипты для electron js с другим именем
+ 1.3 is this ok? (yes) жмем enter
+- появится фойл package.json в нем  вместо теста пишем "start": "electron ." // теперь командой  npm start сможем запускать команду electron . 
+ // дальше необходимо установить electron js  на сайте
+
+2. npm i -D electron@latest  // после этой команды в зависимостях появиться  
+
+3.npm i path url -D // устанавливаем еще пару пакетов // мы обращаемся к пакету менеджеров npm  говорим 
+  
+ что команду i (instal) пакет path и пакет url, далее  -D это установить в зависимостях "devDependenes":{
+  "electron":"^6.0.10" это появится там
+     3,1 созаем файл в нашей папке с игрой script.js который ймы писали при инициализации
+     3,2 Пишем в новом скрипте :
+
+ const url = require('url').format({
+    protocol: 'file',
+    slashes: true,
+    pathname: require('path').join(__dirname, 'index.html')
+});
+const {app, BrowserWindow} = require('electron');
+
+let win;
+function createWindow() {
+    win = new BrowserWindow({
+        width: 500,
+        height: 850
+    });
+
+     win.loadURL(url);
+    
+     win.on('closed', function () {
+          win = null;
+});
+}
+
+app.on('ready', createWindow);
+
+app.on('window -all-closed', function () {
+    app.quit();
+});
+   
+4.npm start
+5. npm i electron-packager -g
+6.npm i electron-packager -D
+7.electron-packager .   таким образом программа будет собрана для вашей системы
